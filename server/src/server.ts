@@ -7,15 +7,17 @@ const prisma = new PrismaClient();
 
 app.register(cors)
 
-app.get("/hello", async () => {
+app.get("/", async () => {
    const habits = prisma.habit.findMany()
    
    return habits
 });
 
 app.listen({
-    port: 3000
+    port: 3333
 })
+
+
 
 
 
