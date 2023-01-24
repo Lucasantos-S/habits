@@ -1,6 +1,9 @@
 import Header from "./components/Header/Header";
 import SummaryTable from "./components/SummaryTable/SummaryTable";
 import "./styles/global.css";
+import { generateDatesFromYearBeginning } from "./utils/generate-Dates";
+
+generateDatesFromYearBeginning()
 
 
 function App() {

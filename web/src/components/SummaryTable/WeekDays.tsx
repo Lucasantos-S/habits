@@ -1,7 +1,7 @@
-const weekDays = ["Domingo", "S", "T", "Q", "Q", "S", "S"];
+const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
 function WeekDays() {
   return (
-    <div className="grid grid-rows-7 grid-flow-row gap-3 items-center w-1 hover:w-7">
+    <div className="grid grid-rows-7 grid-flow-row gap-3 items-center w-10 ">
       {weekDays.map((day, index) => (
         <div
           key={`${index}-${day}`}
