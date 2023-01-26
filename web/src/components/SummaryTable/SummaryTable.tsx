@@ -1,5 +1,5 @@
 import React from 'react'
-import HabitDay from './HabitDay'
+import {HabitDay} from './HabitDay'
 import WeekDays from './WeekDays'
 
 function SummaryTable() {
