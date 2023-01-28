@@ -13,9 +13,7 @@ function SummaryTable() {
     <div className="w-full flex gap-3">
       <WeekDays />
       <div className="grid grid-rows-7 grid-flow-col gap-3">
-        {generateDatesFromYear.map((yars, index) => {
-          console.log(yars);
-          
+        {generateDatesFromYear.map((yars, index) => {       
           return <HabitDay completed={Math.round(Math.random() * 5)} amount={5}  key={yars.toString()}/>;
         })}
 
