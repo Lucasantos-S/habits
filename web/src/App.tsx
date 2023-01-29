@@ -1,4 +1,5 @@
 import Header from "./components/Header/Header";
+import '../src/lib/dayjs'
 import SummaryTable from "./components/SummaryTable/SummaryTable";
 import "./styles/global.css";
 import { generateDatesFromYearBeginning } from "./utils/generate-Dates";

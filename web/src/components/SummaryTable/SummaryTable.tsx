@@ -1,3 +1,6 @@
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import { api } from "../../lib/axios";
 import { generateDatesFromYearBeginning } from "../../utils/generate-Dates";
 import { HabitDay } from "./HabitDay";
 import WeekDays from "./WeekDays";
@@ -8,13 +11,39 @@ const minimunSummaryDatesSize = 18 * 7; // quantidade de quadrados minumos
 const amountOfDatesToFill =
   minimunSummaryDatesSize - generateDatesFromYear.length;
 
+type summary = Array<{
+  id: string;
+  date: string;
+  amount: number;
+  completed: number;
+}>;
+
 function SummaryTable() {
+  const [summary, setSummry] = useState<summary>([]);
+  useEffect(() => {
+    api.get("summary").then((response) => {
+      setSummry(response.data);
+    });
+    
+  }, []);
   return (
     <div className="w-full flex gap-3">
       <WeekDays />
       <div className="grid grid-rows-7 grid-flow-col gap-3">
-        {generateDatesFromYear.map((yars, index) => {       
-          return <HabitDay completed={Math.round(Math.random() * 5)} amount={5}  key={yars.toString()}/>;
+        {generateDatesFromYear.map((date) => {
+          console.log(summary);
+          
+          const dayInSummary = summary.find((day) => {
+            return dayjs(date).isSame(day.date, "day");
+          });
+          return (
+            <HabitDay
+              key={date.toString()}
+              date={date}
+              completed={dayInSummary?.completed}
+              amount={dayInSummary?.amount}
+            />
+          );
         })}
 
         {amountOfDatesToFill > 0 &&

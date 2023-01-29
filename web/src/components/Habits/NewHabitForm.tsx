@@ -1,6 +1,7 @@
 import { Check } from "phosphor-react";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { FormEvent, useState } from "react";
+import { api } from "../../lib/axios";
 
 const availabelWeekDay = [
   "Domingo",
@@ -15,16 +16,23 @@ const availabelWeekDay = [
 export function NewHabitForm() {
   const [title, setTitle] = useState("");
   const [weekDays, setweekDaus] = useState<number[]>([]);
+  const [error, setError] = useState("");
 
   function creteNewHabit(event: FormEvent) {
     event.preventDefault()
-   const data = {
-    title,
-    weekDays
-   }
+    if(!title || weekDays.length ===0) return setError('E necessario o prenchimento de todos os campos abaixo!')
+     
+    api.post('habits', {
+      title,
+      weekdays: weekDays,
+    })
+    setTitle('')
+    setweekDaus([])
+    alert('Habitos criado com sucesso!')
   }
 
   function handleToggleWeekDay(weekDay: number) {
+    setError('')
     if (weekDays.includes(weekDay)) {
       const weekDaysWithRemovedOne = weekDays.filter((day) => day != weekDay);
       setweekDaus(weekDaysWithRemovedOne);
@@ -38,17 +46,22 @@ export function NewHabitForm() {
   }
   return (
     <form onSubmit={creteNewHabit} className="w-full flex flex-col mt-6">
+      {error? <p className=" text-red-500 text-sm mb-2">{error}</p> : null}
       <label htmlFor="habit" className="font-semibold leading-tight">
         Qaul o seu compromentimento?
       </label>
       <input
         type="text"
         name="title"
-        id=""
+        value={title}
         placeholder="ex: Exercicios, dormi bem, etc..."
         className="p-4 rounded-lg bg-zinc-800 text-white placeholder:text-zinc-400 outline-none mt-5"
         autoFocus
-        onChange={({ target }) => setTitle(target.value)}
+        onChange={({ target }) => {
+          setTitle(target.value)
+          setError('')
+        }}
+        
       />
       <label
         htmlFor=" Qual a recorrencia"
@@ -62,6 +75,7 @@ export function NewHabitForm() {
             <Checkbox.Root
               key={day}
               className="flex items-center gap-3 group"
+              checked={weekDays.includes(index)}
               onCheckedChange={() => handleToggleWeekDay(index)}
             >
               <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500   group-data-[state=checked]:border-green-500">
@@ -74,7 +88,7 @@ export function NewHabitForm() {
           );
         })}
       </div>
-      <button className="continue-application  mt-5 bg-green-600 hover:bg-green-500 font-semibold leading-tight">
+      <button className="continue-application  mt-5 bg-green-600 hover:bg-green-500 font-semibold leading-tight ">
         <div className=" bg-zinc-700 border-none">
           <div className="pencil "></div>
           <div className="folder ">
