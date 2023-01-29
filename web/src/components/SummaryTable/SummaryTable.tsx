@@ -30,9 +30,7 @@ function SummaryTable() {
     <div className="w-full flex gap-3">
       <WeekDays />
       <div className="grid grid-rows-7 grid-flow-col gap-3">
-        {generateDatesFromYear.map((date) => {
-          console.log(summary);
-          
+        {generateDatesFromYear.map((date) => { 
           const dayInSummary = summary.find((day) => {
             return dayjs(date).isSame(day.date, "day");
           });
