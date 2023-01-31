@@ -13,22 +13,21 @@ interface HabitDayProps {
 }
 
 export function HabitDay({ dfaultCompleted = 0, amount = 0, date }: HabitDayProps) {
-  const [completet, setComplete] = useState(dfaultCompleted)
+  const [completed, setCompleted] = useState(dfaultCompleted)
 
-  const completedPercentage =
-    amount > 0 ? Math.round((completet / amount) * 100) : 0;
+  const completedPercentage = amount > 0 ? Math.round((completed / amount) * 100) : 0;
   const dayAndMonth = dayjs(date).format("DD/MM");
   const dayOfWeek = dayjs(date).format("dddd");
 
   function handleCompletedChage(completed: number) {
-    setComplete(completed)
+    setCompleted(completed)
   }
 
   return (
     <Popover.Root>
       <Popover.Trigger
         className={clsx(
-          "w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg",
+          "w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg transition-colors",
           {
             "bg-zinc-900": completedPercentage == 0,
             "bg-violet-900  border-violet-900":
@@ -44,13 +43,13 @@ export function HabitDay({ dfaultCompleted = 0, amount = 0, date }: HabitDayProp
         )}
       />
       <Popover.Portal>
-        <Popover.Content className="min-w-[320px] p-6 rounded-2xl bg-zinc-900 flex flex-col">
+        <Popover.Content className="min-w-[320px] p-6 rounded-2xl bg-zinc-900 flex flex-col transition-colors">
           <span className="font-semibold text-zinc-400">{dayOfWeek}</span>
           <span className=" mt-1 font-extrabold leading-tight text-2xl">
             {dayAndMonth}
           </span>
 
-          <ProgressBar progress={75} />
+          <ProgressBar progress={completedPercentage} />
           <HabitsList date={date} handleCompletedChage={handleCompletedChage} />
           <Popover.Arrow width={20} height={10} className=" fill-zinc-900" />
         </Popover.Content>
