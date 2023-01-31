@@ -1,41 +1,28 @@
 import * as Popover from "@radix-ui/react-popover";
 import clsx from "clsx";
 import { ProgressBar } from "./ProgressBar";
-import * as Checkbox from "@radix-ui/react-checkbox";
-import { Check } from "phosphor-react";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { api } from "../../lib/axios";
+
+import HabitsList from "./HabitsList";
+import { useState } from "react";
 
 interface HabitDayProps {
   date: Date;
-  completed?: number;
+  dfaultCompleted?: number;
   amount?: number;
 }
-interface HabitDay  {
-  completedHabits:[],
-  possibleHabits: [
-    created_at: string,
-    id:string,
-    title:string
-  ]
-}
-export function HabitDay({ completed = 0, amount = 0, date }: HabitDayProps) {
-  const [data, setData] = useState<HabitDay>();
-  const completedPercentage =
-    amount > 0 ? Math.round((completed / amount) * 100) : 0;
 
+export function HabitDay({ dfaultCompleted = 0, amount = 0, date }: HabitDayProps) {
+  const [completet, setComplete] = useState(dfaultCompleted)
+
+  const completedPercentage =
+    amount > 0 ? Math.round((completet / amount) * 100) : 0;
   const dayAndMonth = dayjs(date).format("DD/MM");
   const dayOfWeek = dayjs(date).format("dddd");
-  const teste = dayjs(date).format("YYYY-MM-DDT03:00:00.000");
 
-  useEffect(() => {
-    api.get(`day?date=${date}`).then((response) => {
-      setData(response.data);
-      console.log(data);
-      
-    });
-  }, []);
+  function handleCompletedChage(completed: number) {
+    setComplete(completed)
+  }
 
   return (
     <Popover.Root>
@@ -64,26 +51,7 @@ export function HabitDay({ completed = 0, amount = 0, date }: HabitDayProps) {
           </span>
 
           <ProgressBar progress={75} />
-          <div className="mt-6 flex flex-col gap-3">
-            {data?.possibleHabits.map((habits, index) => {
-              let checked
-              if(data.completedHabits){
-                checked = data?.completedHabits.includes(habits.id)
-              }
-              return (
-                <Checkbox.Root checked={checked}  key={habits + index} className="flex items-center gap-3 group">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500   group-data-[state=checked]:border-green-500">
-                    <Checkbox.Indicator >
-                      <Check size={20} className="text-white "></Check>
-                    </Checkbox.Indicator>
-                  </div>
-                  <span className="font-semibold text-xl text-white leading-tight group-data-[state=checked]:line-through group-data-[state=checked]:text-zinc-400">
-                   {habits.title}
-                  </span>
-                </Checkbox.Root>
-              );
-            })}
-          </div>
+          <HabitsList date={date} handleCompletedChage={handleCompletedChage} />
           <Popover.Arrow width={20} height={10} className=" fill-zinc-900" />
         </Popover.Content>
       </Popover.Portal>

@@ -19,34 +19,31 @@ export function NewHabitForm() {
   const [error, setError] = useState("");
 
   function creteNewHabit(event: FormEvent) {
-    event.preventDefault()
-    if(!title || weekDays.length ===0) return setError('E necessario o prenchimento de todos os campos abaixo!')
-     
-    api.post('habits', {
+    event.preventDefault();
+    if (!title || weekDays.length === 0) return setError("E necessario o prenchimento de todos os campos abaixo!");
+
+    api.post("habits", {
       title,
       weekdays: weekDays,
-    })
-    setTitle('')
-    setweekDaus([])
-    alert('Habitos criado com sucesso!')
+    });
+    setTitle("");
+    setweekDaus([]);
+    alert("Habitos criado com sucesso!");
   }
 
   function handleToggleWeekDay(weekDay: number) {
-    setError('')
+    setError("");
     if (weekDays.includes(weekDay)) {
       const weekDaysWithRemovedOne = weekDays.filter((day) => day != weekDay);
       setweekDaus(weekDaysWithRemovedOne);
-      console.log(weekDays)
-      
     } else {
       const weekDaysWithAdddOne = [...weekDays, weekDay];
       setweekDaus(weekDaysWithAdddOne);
-      console.log(weekDays)
     }
   }
   return (
     <form onSubmit={creteNewHabit} className="w-full flex flex-col mt-6">
-      {error? <p className=" text-red-500 text-sm mb-2">{error}</p> : null}
+      {error ? <p className=" text-red-500 text-sm mb-2">{error}</p> : null}
       <label htmlFor="habit" className="font-semibold leading-tight">
         Qaul o seu compromentimento?
       </label>
@@ -58,10 +55,9 @@ export function NewHabitForm() {
         className="p-4 rounded-lg bg-zinc-800 text-white placeholder:text-zinc-400 outline-none mt-5"
         autoFocus
         onChange={({ target }) => {
-          setTitle(target.value)
-          setError('')
+          setTitle(target.value);
+          setError("");
         }}
-        
       />
       <label
         htmlFor=" Qual a recorrencia"
