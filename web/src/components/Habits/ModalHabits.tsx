@@ -14,7 +14,7 @@ function ModalHabits() {
         <Dialog.Portal>
           <Dialog.Overlay className="w-screen h-screen bg-black/80 fixed inset-0 transition-all" />
           <Dialog.Content className=" absolute p-10 bg-zinc-900 w-full max-w-md  rounded-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all">
-            <Dialog.Close className="absolute top-6 right-6 text-zinc-400 hover:text-zinc-200 " >
+            <Dialog.Close className="absolute top-6 right-6 text-zinc-400 hover:text-zinc-200 outline-none transition-colors  focus:ring-2 focus:ring-violet-700focus:ring-offset-2 focus:ring-offset-background   " >
               <X size={24}/>
             </Dialog.Close>
             <Dialog.Title className=" leading-tight text-2xl font-extrabold">
