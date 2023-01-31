@@ -62,9 +62,9 @@ function HabitsList({ date, handleCompletedChage }: HabitsListProps) {
             onCheckedChange={() => handleToggleHabit(habits.id)}
             checked={habitsInfo.completedHabits.includes(habits.id)}
             disabled={isDateInPast}
-            className=" flex items-center gap-3 group"
+            className=" flex items-center gap-3 group transition-all"
           >
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500   group-data-[state=checked]:border-green-500">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500   group-data-[state=checked]:border-green-500 transition-all">
               <Checkbox.Indicator>
                 <Check size={20} className="text-white "></Check>
               </Checkbox.Indicator>
