@@ -10,10 +10,7 @@ app.register(appRouters)
 
 const port = process.env.PORT || 3333
 
-app.listen({
-    port: 3333
-}).then(() => console.log('server rodando com sucesso!!')
-)
+app.listen(port, () => console.log(`listening on ${port}`));
 
 
 
